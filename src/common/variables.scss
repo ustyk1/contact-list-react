@@ -6,12 +6,16 @@ $box-border-radius: 8px;
 
 //shadows
 $box-shadow: 2px 2px 10px 3px rgba(83, 86, 90, 0.1);
+$button-shadow: 1px 1px 4px 1px rgba(83, 86, 90, 0.25);
 
 //colors
-$yellow: #F4D800;
-$yellow-d: #FAD02C;
+$yellow: #facc14;
+$yellow-opacity-06: rgba(250, 204, 21, 0.6);
+$yellow-opacity-06: rgba(237, 194, 20, 0.989);
 $blue-dark: #333652;
 $black: #050707;
 $gray-dark: #53565A;
 $gray-blue: #90ADC6;
 $blue-baby: #ECF1F2;
+$button-hover: #8007FA;
+$text-color-light: #ffffff;

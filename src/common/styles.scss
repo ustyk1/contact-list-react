@@ -1,0 +1,11 @@
+@import './variables.scss';
+
+.button {
+  box-shadow: $button-shadow;
+}
+
+a {
+  text-decoration: none;
+  display: inline-block;
+  color: inherit;
+}

@@ -1,9 +1,62 @@
 @import '../../common/variables.scss';
+@import '../../common/mixins.scss';
 
 .header {
   margin: 20px 0;
-  padding: 15px;
-  border-radius: $box-border-radius;
-  background-color: $box-bg-color;
-  box-shadow: $box-shadow;
+
+  &.MuiAppBar-root {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    background-color: $box-bg-color;
+    border-radius: $box-border-radius;
+    box-shadow: $box-shadow;
+  }
+
+  &__logo {
+    width: 110px;
+    height: 65px;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: $box-border-radius;
+  
+    background-image: url('../../../public/images/logo/logo_1.png');
+    @include bg-image;
+
+    & > a {
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      border-radius: $box-border-radius;
+    }
+  }
+
+  &__toolbar {
+    &.MuiToolbar-root {
+      justify-content: flex-end;
+      width: 100%;
+      padding: 0;
+
+      .MuiButton-root {
+        margin-left: 16px;
+        padding: 12px 15px;
+        font-size: 14px;
+        box-sizing: border-box;
+        background-color: $yellow;
+        border-radius: $box-border-radius;
+
+        &:hover {
+          background-color: $button-hover;
+        }
+  
+        a {
+          width: 100%;
+          height: 100%;
+          border-radius: inherit;
+          padding: 0;
+        }
+      }
+    }
+  }
 }
