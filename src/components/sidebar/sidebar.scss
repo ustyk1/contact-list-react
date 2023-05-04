@@ -1,0 +1,12 @@
+@import '../../common/variables.scss';
+@import '../../common/styles.scss';
+
+.sidebar {
+  min-width: 250px;
+  max-width: 300px;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: $box-bg-color;
+  box-shadow: $box-shadow;
+  border-radius: $box-border-radius;
+}

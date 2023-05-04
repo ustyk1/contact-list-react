@@ -1,0 +1,13 @@
+@import '../../common/variables.scss';
+
+.contact-list {
+  flex-grow: 0;
+
+  &__title {
+    margin: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 32px;
+    text-transform: uppercase;
+  }
+}

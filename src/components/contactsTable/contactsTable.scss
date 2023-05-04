@@ -1,0 +1,55 @@
+@import '../../common//variables.scss';
+
+.table {
+  width: 100%;
+
+  .MuiBox-root {
+    width: 100%;
+    border-radius: $box-border-radius;
+  }
+
+  .MuiPaper-root {
+    width: 100%;
+    margin-bottom: 0;
+    border-radius: $box-border-radius;
+    border: 1px solid $gray-dark_opacity-03;
+    box-shadow: none;
+    background-color: transparent;
+
+    .Mui-checked,
+    .MuiCheckbox-indeterminate {
+      color: $button-hover;
+    }
+  }
+  
+  .MuiTableContainer-root  {
+    width: 100%;
+    
+    .MuiTable-root {
+      width: fit-content;
+      min-width: 100%
+    }
+
+    .MuiTableCell-root	{
+      white-space: nowrap;
+      user-select: none;
+      font-size: 14px;
+      // border: 0.5px solid black;
+    }
+    
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar {
+      background-color: transparent;
+    }
+    
+    &::-webkit-scrollbar {
+      width: 2px;
+      height: 2px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: rgb(179, 179, 179);
+    }
+  }
+}
