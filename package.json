@@ -1,8 +1,13 @@
 {
   "name": "contact-list",
   "version": "0.1.0",
+  "homepage": "https://ustyk1.github.io/contact-list-react",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.8",
+    "@emotion/styled": "^11.10.8",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.12.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -12,6 +17,7 @@
     "react-router-dom": "^6.11.0",
     "react-scripts": "5.0.1",
     "sass": "^1.62.1",
+    "uuid": "^9.0.0",
     "web-vitals": "^2.1.4",
     "yup": "^1.1.1"
   },
@@ -19,7 +25,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

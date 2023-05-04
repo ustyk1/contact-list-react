@@ -1,0 +1,9 @@
+@import '../../common/variables.scss';
+
+.header {
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: $box-border-radius;
+  background-color: $box-bg-color;
+  box-shadow: $box-shadow;
+}
