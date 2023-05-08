@@ -1,0 +1,15 @@
+@import '../../common/variables.scss';
+@import '../../common/mixins.scss';
+
+.form-wrapper {
+  max-width: 600px;
+  padding: 20px;
+  margin: 0 auto;
+
+  .form {
+    &__contact-photo {
+      display: flex;
+      column-gap: 10px;
+    }
+  }
+}

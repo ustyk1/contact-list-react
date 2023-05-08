@@ -1,5 +1,8 @@
+@import '../../../common/variables.scss';
+
 .tool-bar {
   &.MuiToolbar-root {
     min-height: 40px;
+    color: $text-color-dark;
   }
 }
