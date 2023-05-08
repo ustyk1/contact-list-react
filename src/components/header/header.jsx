@@ -40,7 +40,7 @@ const StyledInputBase = styled(InputBase)(() => ({
     padding: '12px 12px 12px 0',
     paddingLeft: `50px`,
     transition: 'width 0.5s ease',
-    width: '100%',
+    // width: '100%',
       width: '16ch',
       '&:focus': {
         width: '26ch',

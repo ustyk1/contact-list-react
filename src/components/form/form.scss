@@ -5,6 +5,10 @@
   max-width: 600px;
   padding: 20px;
   margin: 0 auto;
+  
+  .MuiSnackbar-root {
+    position: absolute;
+  }
 
   .form {
     &__contact-photo {

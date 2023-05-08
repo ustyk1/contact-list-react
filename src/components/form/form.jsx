@@ -20,11 +20,24 @@ import Favorite from '@mui/icons-material/Favorite';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 import './form.scss';
 // import { json } from 'react-router-dom';
 
 function ContactForm() {
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  // const handleClick = () => {
+  //   setOpenSnackbar(true);
+  // };
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenSnackbar(false);
+  };
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -41,10 +54,10 @@ function ContactForm() {
   const formik = useFormik({
     initialValues: {
       id: uuidv4(),
-      name: '',
-      phone: '',
-      email: '',
-      group: '',
+      name: 'Yevheniia Ustyk',
+      phone: '+380958406119',
+      email: 'eugenia@aa.aa',
+      group: 'work',
       avatar: '',
       gender: 'female',
       favourite: false
@@ -52,6 +65,7 @@ function ContactForm() {
     validationSchema: validationSchema,
     onSubmit: (values) => {
       console.log(values);
+      setOpenSnackbar(true);
     },
     handleReset:()=> {
     }
@@ -59,6 +73,16 @@ function ContactForm() {
 
   return (
     <div className='form-wrapper'>  
+      <Snackbar 
+        className='form-wrapper__snackbar' 
+        open={openSnackbar} 
+        autoHideDuration={2000} 
+        onClose={handleCloseSnackbar}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+          Contact added!
+        </Alert>
+      </Snackbar>
       <form onSubmit={formik.handleSubmit} className='form'>
         <Grid
           container
