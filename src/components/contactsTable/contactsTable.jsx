@@ -20,31 +20,31 @@ import EnhancedTableToolbar from './enhancedTableToolbar/enhancedTableToolbar';
 
 import './contactsTable.scss';
 
-function createData(contactName, phoneNumber, email, job, group) {
-  return {
-    contactName,
-    phoneNumber,
-    email,
-    job,
-    group,
-  };
-}
+// function createData(contactName, phoneNumber, email, job, group) {
+//   return {
+//     contactName,
+//     phoneNumber,
+//     email,
+//     job,
+//     group,
+//   };
+// }
 
-const rows = [
-  createData('Leanne Graham', '1-770-736-8031', "Sincere@april.biz", 'Romaguera-Crona', 'job',),
-  createData('Ervin Howell', '010-692-6593', 'Shanna@melissa.tv', "Keebler LLC", ''),
-  createData('Clementine Bauch', '1-463-123-4447', "Nathan@yesenia.net", "Keebler LLC", ''),
-  createData('Patricia Lebsack', '(254)954-1289', "Julianne.OConner@kory.orgqqqqqqqqqqqq", "Yost and Sons", ''),
-  createData('Chelsey Dietrich', '1-477-935-8478', "Lucio_Hettinger@annie.ca", "Romaguera-Jacobson", ''),
-  createData('Dennis Schulist', '210-067-6132', "Karley_Dach@jasper.info", "Abernathy Group", ''),
-  createData('Kurtis Weissnat', '586-493-6943', "Telly.Hoeger@billy.biz", "Deckow-Crist", ''),
-  createData('Jelly Bean', '(775)976-6794', "Sherwood@rosamond.me", "Deckow-Crist", ''),
-  createData('Nicholas Runolfsdottir', '024-648-3804',"Chaim_McDermott@dana.io", "Deckow-Crist", ''),
-  createData('Glenna Reichert', '089-245-1104', "Rey.Padberg@karina.biz", "Deckow-Crist", ''),
-  createData('Clementina DuBuque', '077-987-1254', "Rey.Padberg@karina.biz", "Deckow-Crist", ''),
-  createData('Rick Grund', '099-245-1564', "Rey.Padberg@karina.biz", "Deckow-Crist", ''),
-  createData('Paula Rose', '089-295-1104', "Rey.Padberg@karina.biz", "Deckow-Crist", ''),
-];
+// const rows = [
+//   createData('Leanne Graham', '1-770-736-8031', "Sincere@april.biz", 'Romaguera-Crona', 'job',),
+//   createData('Ervin Howell', '010-692-6593', 'Shanna@melissa.tv', "Keebler LLC", ''),
+//   createData('Clementine Bauch', '1-463-123-4447', "Nathan@yesenia.net", "Keebler LLC", ''),
+//   createData('Patricia Lebsack', '(254)954-1289', "Julianne.OConner@kory.orgqqqqqqqqqqqq", "Yost and Sons", ''),
+//   createData('Chelsey Dietrich', '1-477-935-8478', "Lucio_Hettinger@annie.ca", "Romaguera-Jacobson", ''),
+//   createData('Dennis Schulist', '210-067-6132', "Karley_Dach@jasper.info", "Abernathy Group", ''),
+//   createData('Kurtis Weissnat', '586-493-6943', "Telly.Hoeger@billy.biz", "Deckow-Crist", ''),
+//   createData('Jelly Bean', '(775)976-6794', "Sherwood@rosamond.me", "Deckow-Crist", ''),
+//   createData('Nicholas Runolfsdottir', '024-648-3804',"Chaim_McDermott@dana.io", "Deckow-Crist", ''),
+//   createData('Glenna Reichert', '089-245-1104', "Rey.Padberg@karina.biz", "Deckow-Crist", ''),
+//   createData('Clementina DuBuque', '077-987-1254', "Rey.Padberg@karina.biz", "Deckow-Crist", ''),
+//   createData('Rick Grund', '099-245-1564', "Rey.Padberg@karina.biz", "Deckow-Crist", ''),
+//   createData('Paula Rose', '089-295-1104', "Rey.Padberg@karina.biz", "Deckow-Crist", ''),
+// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -74,12 +74,19 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function EnhancedTable() {
+export default function EnhancedTable({contacts}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('phoneNumber');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const rows = contacts.map(([id, data]) => {
+    return {
+      id,
+      ...data
+    }
+  })
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -96,12 +103,12 @@ export default function EnhancedTable() {
     setSelected([]);
   };
 
-  const handleClick = (event, contactName) => {
-    const selectedIndex = selected.indexOf(contactName);
+  const handleClick = (event, contactId) => {
+    const selectedIndex = selected.indexOf(contactId);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, contactName);
+      newSelected = newSelected.concat(selected, contactId);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -125,7 +132,7 @@ export default function EnhancedTable() {
     setPage(0);
   };
 
-  const isSelected = (contactName) => selected.indexOf(contactName) !== -1;
+  const isSelected = (contactId) => selected.indexOf(contactId) !== -1;
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -159,17 +166,17 @@ export default function EnhancedTable() {
             />
             <TableBody>
               {visibleRows.map((row, index) => {
-                const isItemSelected = isSelected(row.contactName);
+                const isItemSelected = isSelected(row.id);
                 const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <TableRow
                     hover
-                    
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.contactName}
+                    key={row.id}
+                    id={row.id}
                     selected={isItemSelected}
                     sx={{ cursor: 'pointer' }}
                   >
@@ -180,7 +187,7 @@ export default function EnhancedTable() {
                         inputProps={{
                           'aria-labelledby': labelId,
                         }}
-                        onClick={(event) => handleClick(event, row.contactName)}
+                        onClick={(event) => handleClick(event, row.id)}
                       />
                     </TableCell>
                     <TableCell

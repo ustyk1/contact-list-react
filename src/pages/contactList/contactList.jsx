@@ -2,18 +2,35 @@ import './contactList.scss';
 
 import EnhancedTable from '../../components/contactsTable/contactsTable'
 
-function ContactList() {
+import React, { useState, useEffect } from 'react';
+import ContactListService from '../../services/contactListService.js'
+const contactListService = new ContactListService();
+
+
+
+
+//  const isArr = Array.isArray(data)
+
+  function ContactList() {
   const title = 'Contacts';
+  const [contactList, setContactList] = useState({});
+
+  useEffect(() => {
+    contactListService.onGetContactList()
+    .then(data => {
+      const contacts = Object.entries(data);
+      // console.log('contacts', data);
+      setContactList(contacts);
+    })
+  }, [])
 
   return (
-    <div className="contact-list">
-      <h2 className='contact-list__title'>{ title }</h2>
-
-      <EnhancedTable></EnhancedTable>
-
-
-
-    </div>
+    contactList.length ? (
+      <div className="contact-list">
+        <h2 className='contact-list__title'>{ title }</h2>
+        <EnhancedTable contacts={ contactList }></EnhancedTable>
+      </div>
+    ) : <p>Loading...</p>   
   )
 }
 

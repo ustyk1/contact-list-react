@@ -24,13 +24,16 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
 import './form.scss';
-// import { json } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
+
+import ContactListService from '../../services/contactListService.js'
+const contactListService = new ContactListService();
 
 function ContactForm() {
+  const navigate = useNavigate();
+
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
-  // const handleClick = () => {
-  //   setOpenSnackbar(true);
-  // };
+ 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -40,9 +43,10 @@ function ContactForm() {
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    phone: Yup.string().required('Phone is required'),
+    contactName: Yup.string().required('Name is required'),
+    phoneNumber: Yup.string().required('Phone is required'),
     email: Yup.string().email('Invalid email').required('Email is required'),
+    job: Yup.string(),
     avatar: Yup.string(),
     gender: Yup.string().oneOf(['male', 'female', 'other'], 'Invalid gender'),
     group: Yup.string().oneOf(['', 'work', 'family', 'private', 'friends', 'other'], 'Invalid Group').required('Group is required'),
@@ -53,22 +57,26 @@ function ContactForm() {
 
   const formik = useFormik({
     initialValues: {
-      id: uuidv4(),
-      name: 'Yevheniia Ustyk',
-      phone: '+380958406119',
-      email: 'eugenia@aa.aa',
-      group: 'work',
+      // id: uuidv4(),
+      contactName: '',
+      phoneNumber: '',
+      email: '',
+      job: '',
+      group: '',
       avatar: '',
       gender: 'female',
       favourite: false
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      console.log(values);
-      setOpenSnackbar(true);
+      // console.log('submit data', values);
+      contactListService.onSaveData(values)
+      .then(response => {
+        setOpenSnackbar(true);
+        setTimeout(() => navigate('/'), 800)
+      }) 
     },
-    handleReset:()=> {
-    }
+    handleReset:()=> { }
   })
 
   return (
@@ -106,31 +114,30 @@ function ContactForm() {
                       name="avatar"
                       value={formik.values.avatar} 
                       onChange={formik.handleChange}
-
-                      />
+                    />
                   </Button>
                 </div>
               </Grid>
               <Grid item>
                 <TextField
-                  id="name"
-                  name="name"
+                  id="contactName"
+                  name="contactName"
                   label="Name *"
-                  value={formik.values.name}
+                  value={formik.values.contactName}
                   onChange={formik.handleChange}
-                  helperText={formik.errors.name || ' '}
-                  error={!!formik.errors.name}
+                  helperText={formik.errors.contactName || ' '}
+                  error={!!formik.errors.contactName}
                 />
               </Grid>
               <Grid item>
                 <TextField
                   id="outlined-required"
-                  name="phone"
+                  name="phoneNumber"
                   label="Phone *" 
-                  value={formik.values.phone}
+                  value={formik.values.phoneNumber}
                   onChange={formik.handleChange}
-                  helperText={formik.errors.phone || ' '}
-                  error={!!formik.errors.phone}
+                  helperText={formik.errors.phoneNumber || ' '}
+                  error={!!formik.errors.phoneNumber}
                 />
               </Grid>
               <Grid item>
@@ -144,6 +151,17 @@ function ContactForm() {
                   error={!!formik.errors.email}
                 />
               </Grid>
+              <Grid item>
+                <TextField
+                  id="outlined-required"
+                  name="job"
+                  label="Job"
+                  value={formik.values.job}
+                  onChange={formik.handleChange}
+                  helperText={formik.errors.job || ' '}
+                  error={!!formik.errors.job}
+                />
+              </Grid>
             </Grid>
             <Grid item container direction="column" alignItems="center" rowSpacing="10px" xs={12} md={6}>
               <Grid item>
@@ -153,7 +171,7 @@ function ContactForm() {
                     labelId="demo-simple-select-required-label"
                     id="demo-simple-select-required"
                     value={formik.values.group}
-                    label="Group"
+                    label="Group *"
                     name="group"
                     onChange={formik.handleChange}
                     error={!!formik.errors.group}
