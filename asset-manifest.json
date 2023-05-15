@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/contact-list-react/static/css/main.2862a364.css",
-    "main.js": "/contact-list-react/static/js/main.b1ff6945.js",
+    "main.css": "/contact-list-react/static/css/main.7e9f3ad7.css",
+    "main.js": "/contact-list-react/static/js/main.c7d788fe.js",
     "index.html": "/contact-list-react/index.html",
-    "main.2862a364.css.map": "/contact-list-react/static/css/main.2862a364.css.map",
-    "main.b1ff6945.js.map": "/contact-list-react/static/js/main.b1ff6945.js.map"
+    "main.7e9f3ad7.css.map": "/contact-list-react/static/css/main.7e9f3ad7.css.map",
+    "main.c7d788fe.js.map": "/contact-list-react/static/js/main.c7d788fe.js.map"
   },
   "entrypoints": [
-    "static/css/main.2862a364.css",
-    "static/js/main.b1ff6945.js"
+    "static/css/main.7e9f3ad7.css",
+    "static/js/main.c7d788fe.js"
   ]
 }
