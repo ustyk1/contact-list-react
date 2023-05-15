@@ -20,7 +20,7 @@ function App() {
             <Routes>
               <Route path='/' element={<ContactList/>}/>
               <Route path='/new-contact' element={<NewContact/>}/>
-              <Route path='/edit-contact' element={<EditContact/>}/>
+              <Route path='/edit-contact/:id' element={<EditContact/>}/>
               <Route path='*' element={<NotFound/>}/>
             </Routes>
           </div>

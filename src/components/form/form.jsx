@@ -29,7 +29,7 @@ import { json, useNavigate } from 'react-router-dom';
 import ContactListService from '../../services/contactListService.js'
 const contactListService = new ContactListService();
 
-function ContactForm() {
+function ContactForm({initialValues}) {
   const navigate = useNavigate();
 
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
@@ -56,17 +56,7 @@ function ContactForm() {
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
   const formik = useFormik({
-    initialValues: {
-      // id: uuidv4(),
-      contactName: '',
-      phoneNumber: '',
-      email: '',
-      job: '',
-      group: '',
-      avatar: '',
-      gender: 'female',
-      favourite: false
-    },
+    initialValues: initialValues,
     validationSchema: validationSchema,
     onSubmit: (values) => {
       // console.log('submit data', values);

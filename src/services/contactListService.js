@@ -33,4 +33,18 @@ export default class ContactListService {
 
     return contactList;
   }
+  async onGetContact(id) {
+    const contactList = await fetch(`https://simple-contact-list-default-rtdb.firebaseio.com/contacts/${id}.json`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => {
+      console.log('response on getContact --->>>', response)
+      return response.json()})
+    .catch((error) => console.log(error));
+
+    return contactList;
+  }
 }

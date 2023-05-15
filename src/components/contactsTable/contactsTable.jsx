@@ -206,7 +206,7 @@ export default function EnhancedTable({contacts}) {
                     <TableCell align="left" sx={{p: '10px'}}>{row.group}</TableCell>
                     <TableCell align="left" sx={{p: '10px'}}>
                       <Tooltip title="Edit" onClick={(event) =>  event.stopPropagation()}>
-                        <Link to="/edit-contact">            
+                        <Link to={`/edit-contact/${row.id}`}>            
                           <IconButton>
                             <EditOutlinedIcon />
                           </IconButton>

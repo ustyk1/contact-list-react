@@ -6,15 +6,10 @@ import React, { useState, useEffect } from 'react';
 import ContactListService from '../../services/contactListService.js'
 const contactListService = new ContactListService();
 
-
-
-
-//  const isArr = Array.isArray(data)
-
-  function ContactList() {
+function ContactList() {
   const title = 'Contacts';
   const [contactList, setContactList] = useState({});
-
+  
   useEffect(() => {
     contactListService.onGetContactList()
     .then(data => {
