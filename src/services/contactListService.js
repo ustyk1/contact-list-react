@@ -33,6 +33,7 @@ export default class ContactListService {
 
     return contactList;
   }
+  
   async onGetContact(id) {
     const contactList = await fetch(`https://simple-contact-list-default-rtdb.firebaseio.com/contacts/${id}.json`, {
       method: 'GET',
@@ -42,6 +43,22 @@ export default class ContactListService {
     })
     .then(response => {
       console.log('response on getContact --->>>', response)
+      return response.json()})
+    .catch((error) => console.log(error));
+
+    return contactList;
+  }
+
+  async onChangeContact(id, contact) {
+    const contactList = await fetch(`https://simple-contact-list-default-rtdb.firebaseio.com/contacts/${id}.json`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(contact),
+    })
+    .then(response => {
+      console.log('response on changeContact --->>>', response)
       return response.json()})
     .catch((error) => console.log(error));
 

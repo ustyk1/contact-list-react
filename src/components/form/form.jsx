@@ -24,23 +24,8 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
 import './form.scss';
-import { json, useNavigate } from 'react-router-dom';
 
-import ContactListService from '../../services/contactListService.js'
-const contactListService = new ContactListService();
-
-function ContactForm({initialValues}) {
-  const navigate = useNavigate();
-
-  const [openSnackbar, setOpenSnackbar] = React.useState(false);
- 
-  const handleCloseSnackbar = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenSnackbar(false);
-  };
+function ContactForm({initialValues, onSubmit, textSubmitButton}) {
 
   const validationSchema = Yup.object().shape({
     contactName: Yup.string().required('Name is required'),
@@ -58,29 +43,12 @@ function ContactForm({initialValues}) {
   const formik = useFormik({
     initialValues: initialValues,
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      // console.log('submit data', values);
-      contactListService.onSaveData(values)
-      .then(response => {
-        setOpenSnackbar(true);
-        setTimeout(() => navigate('/'), 800)
-      }) 
-    },
+    onSubmit: onSubmit,
     handleReset:()=> { }
   })
 
   return (
     <div className='form-wrapper'>  
-      <Snackbar 
-        className='form-wrapper__snackbar' 
-        open={openSnackbar} 
-        autoHideDuration={2000} 
-        onClose={handleCloseSnackbar}
-      >
-        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
-          Contact added!
-        </Alert>
-      </Snackbar>
       <form onSubmit={formik.handleSubmit} className='form'>
         <Grid
           container
@@ -208,7 +176,7 @@ function ContactForm({initialValues}) {
             </Grid>
           </Grid>
           <Grid item>
-            <Button variant="contained" type="submit" className='form__submit-button button'>Add contact</Button>
+            <Button variant="contained" type="submit" className='form__submit-button button'>{textSubmitButton}</Button>
           </Grid>
         </Grid>
       </form>   
