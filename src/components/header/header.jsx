@@ -9,6 +9,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 
+import { useSelector, useDispatch } from 'react-redux'
+import { searchContacts } from '../../redux/actions.js'
+
 import './header.scss';
 import '../../common/styles.scss';
 
@@ -49,6 +52,13 @@ const StyledInputBase = styled(InputBase)(() => ({
 }));
 
 function Header() {
+  const dispatch = useDispatch();
+  const inputVlaue = useSelector((state) => state.currentSearchValue);
+
+  let searchContact = (event) => {
+    dispatch(searchContacts(event.target.value))
+    console.log('event.target.value', event.target.value);
+  }
   return (
     <AppBar className="header" position="static" sx={{p: '20px'}}>
       <div className="header__logo">
@@ -62,7 +72,9 @@ function Header() {
           <StyledInputBase
             className="search__input"
             placeholder="Search contact…"
-            inputProps={{ 'aria-label': 'search' }}
+            inputProps={{ 'aria-label': 'search' }} 
+            value={inputVlaue}
+            onChange={searchContact}
           />
         </Search>
         <Button 

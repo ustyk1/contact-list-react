@@ -19,12 +19,12 @@ function EditContact() {
     console.log(JSON.stringify(id));
     console.log('get contact');
    
-    contactListService.onGetContact(id)
+    contactListService.getContact(id)
     .then(data => {
       setContact(data);
       setIsDataGetted(true);
     })
-  }, []);
+  }, [id]);
 
   const handleClosePopup = (event, reason) => {
     if (reason === 'clickaway') {
@@ -35,7 +35,7 @@ function EditContact() {
   };
   
   const handleSubmit = (values) => {
-    contactListService.onChangeContact(id, values)
+    contactListService.changeContact(id, values)
     .then(response => {
       setOpenPopup(true);
       setTimeout(() => navigate('/'), 1000)

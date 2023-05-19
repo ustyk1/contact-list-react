@@ -32,7 +32,7 @@ function NewContact() {
 
   const handleSubmit = (values) => {
     console.log('submit data', values);
-    contactListService.onSaveData(values)
+    contactListService.saveData(values)
     .then(response => {
       setOpenPopup(true);
       setTimeout(() => navigate('/'), 1000)

@@ -1,31 +1,34 @@
 import './contactList.scss';
 
+import { useSelector, useDispatch } from 'react-redux'
+import { updateContacts, deleteContact } from '../../redux/actions'
+
 import EnhancedTable from '../../components/contactsTable/contactsTable'
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ContactListService from '../../services/contactListService.js'
 const contactListService = new ContactListService();
 
 function ContactList() {
   const title = 'Contacts';
-  const [contactList, setContactList] = useState({});
-  
+  const dispatch = useDispatch();
+  const contactList = useSelector((state) => state.contacts);
+
   useEffect(() => {
-    contactListService.onGetContactList()
-    .then(data => {
-      const contacts = Object.entries(data);
-      // console.log('contacts', data);
-      setContactList(contacts);
-    })
+    contactListService.getContactList()
+    .then(data => dispatch(updateContacts(data)))
   }, [])
+  
+  const handleDeleteContact = (id) => {
+    contactListService.deleteContact(id)
+    .then(data => dispatch(deleteContact(id)))
+  }
 
   return (
-    contactList.length ? (
-      <div className="contact-list">
-        <h2 className='contact-list__title'>{ title }</h2>
-        <EnhancedTable contacts={ contactList }></EnhancedTable>
-      </div>
-    ) : <p>Loading...</p>   
+    <div className="contact-list">
+      <h2 className='contact-list__title'>{ title }</h2>
+      <EnhancedTable contacts={ contactList } onDeleteContact={ handleDeleteContact }></EnhancedTable>
+    </div> 
   )
 }
 

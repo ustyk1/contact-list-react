@@ -1,6 +1,5 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import {v4 as uuidv4} from 'uuid';
 
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
@@ -20,8 +19,6 @@ import Favorite from '@mui/icons-material/Favorite';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
 
 import './form.scss';
 
