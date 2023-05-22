@@ -15,10 +15,7 @@ function EditContact() {
   const [openPopup, setOpenPopup] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(JSON.stringify(id));
-    console.log('get contact');
-   
+  useEffect(() => {    
     contactListService.getContact(id)
     .then(data => {
       setContact(data);

@@ -3,13 +3,12 @@ import { UPDATE_CONTACTS, SEARCH_CONTACTS, DELETE_CONTACT } from "./types"
 const intialState = {
   contacts: [],
   currentSearchValue: ''
-  // states:[]
 }
 
 const reducer = (state = intialState, action) => {
   switch (action.type) {
     case UPDATE_CONTACTS:
-      console.log('contacts: action.payload', action.payload);
+      console.log('UPDATE_CONTACTS', action.payload);
       return {
         ...state,
         contacts: [...action.payload]

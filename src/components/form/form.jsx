@@ -32,7 +32,7 @@ function ContactForm({initialValues, onSubmit, textSubmitButton}) {
     avatar: Yup.string(),
     gender: Yup.string().oneOf(['male', 'female', 'other'], 'Invalid gender'),
     group: Yup.string().oneOf(['', 'work', 'family', 'private', 'friends', 'other'], 'Invalid Group').required('Group is required'),
-    favourite: Yup.boolean()
+    favorite: Yup.boolean()
   })
 
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
@@ -163,10 +163,11 @@ function ContactForm({initialValues, onSubmit, textSubmitButton}) {
               <Grid item>
                 <Checkbox 
                   {...label}  
-                  name="favourite" 
-                  icon={<FavoriteBorder />} 
+                  name="favorite" 
+                  icon={<FavoriteBorder />}
+                  checked={!!formik.values.favorite}
                   checkedIcon={<Favorite />} 
-                  value={formik.values.favourite}
+                  value={formik.values.favorite}
                   onChange={formik.handleChange}
                 />
               </Grid>

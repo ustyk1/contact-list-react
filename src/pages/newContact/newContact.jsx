@@ -19,7 +19,7 @@ function NewContact() {
     group: '',
     avatar: '',
     gender: 'female',
-    favourite: false
+    favorite: false
   }
   
   const handleClosePopup = (event, reason) => {

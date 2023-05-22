@@ -19,7 +19,7 @@ function App() {
         <Router basename="/contact-list-react">
           <Header></Header>
           <main className='main-block'>
-            {/* <Sidebar></Sidebar> */}
+            <Sidebar></Sidebar>
             <div className='main-block__content-block'>
               <Routes>
                 <Route path='/' element={<ContactList/>}/>
