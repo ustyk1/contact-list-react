@@ -30,11 +30,14 @@ function stringAvatar(name) {
 }
 
 function ContactAvatar(props)  {
-  const { contactName } = props;
+  const { contactName, isAvatarImage } = props;
   
   return (
     <div className='contact-avatar'>
-      <Avatar {...stringAvatar(contactName)} />
+      { isAvatarImage ? 
+        <Avatar src={contactName} /> : 
+        <Avatar {...stringAvatar(contactName)} />
+      }
     </div>
   )
 }

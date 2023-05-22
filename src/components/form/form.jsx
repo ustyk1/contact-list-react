@@ -19,10 +19,12 @@ import Favorite from '@mui/icons-material/Favorite';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import './form.scss';
 
-function ContactForm({initialValues, onSubmit, textSubmitButton}) {
+function ContactForm({initialValues, onSubmit, textSubmitButton,  purpose, onShowPopup}) {
 
   const validationSchema = Yup.object().shape({
     contactName: Yup.string().required('Name is required'),
@@ -36,6 +38,32 @@ function ContactForm({initialValues, onSubmit, textSubmitButton}) {
   })
 
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+  });
+
+  async function handleFileInputChange(event) {
+    const file = event.target.files[0];
+    const result = await toBase64(file);
+    const isAvatarAdded = !!formik.values.avatar;
+
+    formik.values.avatar = result;
+    if (isAvatarAdded) {
+      onShowPopup('Icon changed!');
+    } else {
+      onShowPopup('Icon added!');
+    }
+  }
+
+  function handleDeleteIcon() {
+    if (!formik.values.avatar) return;
+    formik.values.avatar = '';
+    onShowPopup('Icon deleted!');
+  }
 
   const formik = useFormik({
     initialValues: initialValues,
@@ -57,18 +85,26 @@ function ContactForm({initialValues, onSubmit, textSubmitButton}) {
           <Grid item container direction="row" xs={12} md={6} columnSpacing="20px">
             <Grid item xs container direction="column" alignItems="center" rowSpacing="10px">
               <Grid item>
-                <div className='form__contact-photo'>
-                  <Avatar src="/broken-image.jpg" />
+                <div className='form__contact-photo avatar'>
+                  <div className='avatar__wrapper'>
+                    <Avatar src={
+                      purpose === 'edit' ? formik.values.avatar : 
+                      purpose === 'addNew' ? formik.values.avatar : "/broken-image.jpg"
+                    }/>
+                    <IconButton aria-label="delete" size="small" sx={{position: 'absolute', top: -7, left: 30}} onClick={handleDeleteIcon}>
+                      <DeleteIcon fontSize="inherit" />
+                    </IconButton>
+                  </div>
                   <Button startIcon={<PhotoCamera  />} component="label">
-                    Add photo
+                    {purpose === 'addNew' ? 'Add photo' : 'Change photo'}
                     <input 
                       hidden 
                       accept="image/*" 
                       multiple 
                       type="file" 
                       name="avatar"
-                      value={formik.values.avatar} 
-                      onChange={formik.handleChange}
+                      // value={formik.values.avatar} 
+                      onChange={handleFileInputChange}
                     />
                   </Button>
                 </div>

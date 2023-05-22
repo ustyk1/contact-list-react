@@ -13,6 +13,7 @@ function EditContact() {
   const [contact, setContact] = useState({});
   const [isDataGetted, setIsDataGetted] = useState(false);
   const [openPopup, setOpenPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {    
@@ -34,9 +35,15 @@ function EditContact() {
   const handleSubmit = (values) => {
     contactListService.changeContact(id, values)
     .then(response => {
+      setPopupMessage("Contact edited!");
       setOpenPopup(true);
-      setTimeout(() => navigate('/'), 1000)
+      setTimeout(() => navigate('/'), 1000);
     }) 
+  }
+  
+  const handleShowPopup = popupMessage => {
+    setPopupMessage(popupMessage);
+    setOpenPopup(true);
   }
 
   return (
@@ -44,7 +51,7 @@ function EditContact() {
       <h2>Edit Contact</h2>
       <Popup 
         onClose={handleClosePopup} 
-        popupText="Contact edited!" 
+        popupText={popupMessage} 
         isOpen={openPopup}
       ></Popup>
       { isDataGetted ? 
@@ -52,6 +59,8 @@ function EditContact() {
           initialValues={contact} 
           onSubmit={handleSubmit} 
           textSubmitButton={'Edit contact'}
+          purpose={'edit'}
+          onShowPopup={handleShowPopup}
         ></ContactForm> : <p>Loading...</p>
       }
     </div>

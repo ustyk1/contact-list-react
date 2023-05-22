@@ -9,6 +9,7 @@ const contactListService = new ContactListService();
 
 function NewContact() {
   const [openPopup, setOpenPopup] = React.useState(false);
+  const [popupMessage, setPopupMessage] = React.useState('');
   const navigate = useNavigate();
  
   const initialValues = {
@@ -34,9 +35,15 @@ function NewContact() {
     console.log('submit data', values);
     contactListService.saveData(values)
     .then(response => {
+      setPopupMessage("Contact added!")
       setOpenPopup(true);
-      setTimeout(() => navigate('/'), 1000)
+      setTimeout(() => navigate('/'), 1000);
     }) 
+  }
+
+  const handleShowPopup = popupMessage => {
+    setPopupMessage(popupMessage);
+    setOpenPopup(true);
   }
 
   return (
@@ -44,13 +51,15 @@ function NewContact() {
       <h2>New Contact</h2>
       <Popup 
         onClose={handleClosePopup} 
-        popupText="Contact added!" 
+        popupText={popupMessage}
         isOpen={openPopup}
       ></Popup>
       <ContactForm 
         initialValues={initialValues} 
         onSubmit={handleSubmit} 
         textSubmitButton={'Add contact'}
+        purpose={'addNew'} 
+        onShowPopup={handleShowPopup}
       ></ContactForm>
     </div>
   )

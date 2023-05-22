@@ -15,7 +15,6 @@ import ContactAvatar from '../contactAvatar/contactAvatar';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 
 import EnhancedTableHead from './enhancedTableHead/enhancedTableHead';
 import EnhancedTableToolbar from './enhancedTableToolbar/enhancedTableToolbar';
@@ -180,9 +179,9 @@ export default function EnhancedTable(props) {
                           id={labelId}
                           scope="row"
                           padding="none"
-                          sx={{p: '10px'}}
+                          sx={{p: '10px', display: 'flex', alignItems: 'center'}}
                         >
-                          <ContactAvatar contactName={row.contactName}/>
+                          <ContactAvatar isAvatarImage={!!row.avatar} contactName={!!row.avatar ? row.avatar : row.contactName }/>
                           {row.contactName}
                         </TableCell>
                         <TableCell align="left" sx={{p: '10px'}}>{row.phoneNumber}</TableCell>
