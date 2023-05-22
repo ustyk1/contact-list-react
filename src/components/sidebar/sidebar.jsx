@@ -7,16 +7,20 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import Diversity1Icon from '@mui/icons-material/Diversity1';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Diversity3Icon from '@mui/icons-material/Diversity3';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { selectGroup, showAllContacts, showFavoriteContacts } from '../../redux/actions';
 
 export default function SelectedListItem() {
   const contacts = useSelector((state)=> state.contacts);
   const numberofContacts = contacts.length;
+  const dispatch = useDispatch();
+  const isFavorite = true;
 
   const contactStatuses = {
     work: {
@@ -48,7 +52,12 @@ export default function SelectedListItem() {
       count: 0,
       icon: <FavoriteBorderIcon/>,
       index: 5
-    }
+    },
+    all: {
+      count: 0,
+      icon: <GroupOutlinedIcon/>,
+      index: 6
+    },
   }
 
   const statusNames = [...Object.keys(contactStatuses)];
@@ -58,19 +67,37 @@ export default function SelectedListItem() {
     contactData.favorite && (contactStatuses.favorite.count += 1);
   });
 
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = React.useState(6);
 
   const handleListItemClick = (event, index) => {
     setSelectedIndex(index);
+    if (index === 6) {
+      dispatch(showAllContacts(contacts))
+    } else if (index === 5) {
+      dispatch(showFavoriteContacts(isFavorite))
+    } else {
+      dispatch(selectGroup(statusNames[index]))
+    }
   };
 
   return (
     <aside className="sidebar">
-      <Box sx={{ width: '100%', maxWidth: 280, bgcolor: 'background.paper' }}>
-        <h2>All contacts: {numberofContacts}</h2>
+      <Box sx={{ width: '100%', maxWidth: 280, bgcolor: 'transparent' }}>
+        <h2>My contacts</h2>
         <List component="nav" aria-label="main mailbox folders">
+          <ListItemButton
+            selected={selectedIndex === contactStatuses.all.index}
+            onClick={(event) => handleListItemClick(event, contactStatuses.all.index)}
+          >
+            <ListItemIcon>
+              {contactStatuses.all.icon}
+            </ListItemIcon>
+            <ListItemText primary={'all'} />
+            <ListItemText primary={numberofContacts} sx={{ textAlign: 'right' }}/>
+          </ListItemButton>
+          <Divider/>
           {statusNames.map(statusName => {
-            if (statusName === 'favorite') {
+            if (statusName === 'favorite' || statusName === 'all') {
               return
             } else {
                return (
@@ -83,7 +110,7 @@ export default function SelectedListItem() {
                     {contactStatuses[statusName].icon}
                   </ListItemIcon>
                   <ListItemText primary={statusName} />
-                  <ListItemText primary={contactStatuses[statusName].count} />
+                  <ListItemText primary={contactStatuses[statusName].count} sx={{ textAlign: 'right' }} />
                 </ListItemButton>
               ) 
             } 
@@ -97,7 +124,7 @@ export default function SelectedListItem() {
                   {contactStatuses.favorite.icon}
                 </ListItemIcon>
                 <ListItemText primary={'favorite'} />
-                <ListItemText primary={contactStatuses.favorite.count} />
+                <ListItemText primary={contactStatuses.favorite.count} sx={{ textAlign: 'right' }}/>
               </ListItemButton>
         </List>
       </Box>

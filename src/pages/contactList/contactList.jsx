@@ -1,7 +1,7 @@
 import './contactList.scss';
 
 import { useSelector, useDispatch } from 'react-redux'
-import { updateContacts, deleteContact } from '../../redux/actions'
+import { updateContacts, deleteContact, selectGroup, showAllContacts, updateSelectedGroup } from '../../redux/actions'
 
 import EnhancedTable from '../../components/contactsTable/contactsTable'
 
@@ -12,11 +12,15 @@ const contactListService = new ContactListService();
 function ContactList() {
   const title = 'Contacts';
   const dispatch = useDispatch();
-  const contactList = useSelector((state) => state.contacts);
+  // const contactList = useSelector((state) => state.contacts);
+  const selectedGroup = useSelector((state) => state.selectedGroup);
 
   useEffect(() => {
     contactListService.getContactList()
-    .then(data => dispatch(updateContacts(data)))
+    .then(data => {
+      dispatch(updateContacts(data)); 
+      dispatch(showAllContacts(data));
+    })
   }, [])
   
   const handleDeleteContact = (id) => {
@@ -27,7 +31,7 @@ function ContactList() {
   return (
     <div className="contact-list">
       <h2 className='contact-list__title'>{ title }</h2>
-      <EnhancedTable contacts={ contactList } onDeleteContact={ handleDeleteContact }></EnhancedTable>
+      <EnhancedTable contacts={ selectedGroup } onDeleteContact={ handleDeleteContact }></EnhancedTable>
     </div> 
   )
 }

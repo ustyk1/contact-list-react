@@ -5,7 +5,6 @@ import Alert from '@mui/material/Alert';
 import './popup.scss';
 
 function Popup({popupText, isOpen, onClose}) {
-  console.log('popup');
   return (
     <div className="popup">
       <Snackbar 
