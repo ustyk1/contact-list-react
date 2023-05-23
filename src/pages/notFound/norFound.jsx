@@ -2,7 +2,9 @@ import './notFound.scss';
 
 function NotFound() {
   return (
-    <div className="not-found">Not Found</div>
+    <div className="not-found">
+      <h1>Not Found!</h1>
+    </div>
   )
 }
 
